@@ -39,6 +39,13 @@ class InlineEditorEnvelope extends PureComponent {
         const nodeType = this.props.nodeTypesRegistry.getNodeType(nodeTypeName);
         const icon = $get('icon', editorOptions) || 'pencil';
         const value = $get(['properties', propertyName], node);
+
+        const clientRect = ReactDOM
+            .findDOMNode(this.refs['enveloperDropdownContent'])
+            .getBoundingClientRect();
+
+        console.log(clientRect);
+
         return (
             <div style={{display: 'inline-block'}}>
                 <DropDown.Stateless isOpen={this.state.isOpen} padded={true} onToggle={this.handleToggle} onClose={() => null}>
@@ -65,7 +72,7 @@ class InlineEditorEnvelope extends PureComponent {
                         '}</style>
                         <Icon className="enveloper_dropdown_icon" icon={icon} />
                     </DropDown.Header>
-                    <DropDown.Contents className="enveloper_dropdown_contents" scrollable={false}>
+                    <DropDown.Contents className="enveloper_dropdown_contents" ref="enveloperDropdownContent" scrollable={false}>
                         <div>
                             <EditorEnvelope
                                 identifier={propertyName}
